@@ -27,5 +27,4 @@ def main() -> None:
     print("Bob unique:", bob_u)
 
 
-if __name__ == "__main__":
-    main()
+main()

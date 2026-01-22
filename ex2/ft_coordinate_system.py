@@ -47,5 +47,4 @@ def main() -> None:
     print(f"Coordinates: X={px1}, Y={py1}, Z={pz1}")
 
 
-if __name__ == "__main__":
-    main()
+main()

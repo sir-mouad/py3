@@ -73,5 +73,4 @@ def main() -> None:
     print(f" {len(achivements[top_name])} achivements)")
 
 
-if __name__ == "__main__":
-    main()
+main()

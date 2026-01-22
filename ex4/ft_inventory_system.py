@@ -84,5 +84,4 @@ def main() -> None:
     print("Sample lookup - 'sword' in inventory:", 'sword' in inventory)
 
 
-if __name__ == "__main__":
-    main()
+main()
