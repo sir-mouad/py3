@@ -1,4 +1,4 @@
-def event_create():
+def event_create() -> iter:
     for i in range(1, 1001):
         if i % 1 == 0:
             name = "alice"
@@ -27,65 +27,66 @@ def event_create():
         yield i, name, lvl, ach
 
 
-def prime_num():
-    i = 2
+def prime_num() -> iter:
     index = 5
     index_p = 0
-    while i < 10000:
+    for i in range(2, 1000):
         is_prime = True
-        j = 2
-        while j <= i / 2:
+        for j in range(2, i // 2 + 1):
             if i % j == 0:
                 is_prime = False
-            j += 1
         if is_prime:
             yield i, index_p
             index_p += 1
         if index_p == index:
             return
+
+
+def main() -> None:
+    print("=== Game Data Stream Processor ===\n")
+    print("Processing 1000 game events...\n")
+    H_lvl = 0
+    tra = 0
+    lv_up = 0
+    for i, name, lvl, ach in event_create():
+        if lvl > 10:
+            H_lvl += 1
+        if ach == "found treasure":
+            tra += 1
+        if ach == "leveled up":
+            lv_up += 1
+        print(f"Event {i} player {name} (level {lvl}) {ach}")
+    print("\n=== Stream Analytics ===")
+    print("Total events processed:", i)
+    print("High-level players (10+):", H_lvl)
+    print("Treasure events:", tra)
+    print("Level-up events:", lv_up)
+    print("Memory usage: Constant (streaming)")
+    print("Processing time: 0.045 seconds")
+    print("\n=== Generator Demonstration ===")
+    a = 0
+    b = 1
+    fi = []
+    fi += [a]
+    fi += [b]
+    for i in range(2, 10):
+        c = a + b
+        a = b
+        b = c
+        fi += [c]
         i += 1
+    fi = iter(fi)
+    print("Fibonacci sequence (first 10):", end=" ")
+    for i in range(0, 9):
+        if i != 9:
+            print(next(fi), end=", ")
+    print(next(fi))
+    print("Prime numbers (first 5):", end="")
+    for prime, index in prime_num():
+        if index != 4:
+            print(prime, end=", ")
+    print(prime)
 
 
-print("=== Game Data Stream Processor ===\n")
-print("Processing 1000 game events...\n")
-H_lvl = 0
-tra = 0
-lv_up = 0
-for i, name, lvl, ach in event_create():
-    if lvl > 10:
-        H_lvl += 1
-    if ach == "found treasure":
-        tra += 1
-    if ach == "leveled up":
-        lv_up += 1
-    print(f"Event {i} player {name} (level {lvl}) {ach}")
-print("\n=== Stream Analytics ===")
-print("Total events processed:", i)
-print("High-level players (10+):", H_lvl)
-print("Treasure events:", tra)
-print("Level-up events:", lv_up)
-print("Memory usage: Constant (streaming)")
-print("Processing time: 0.045 seconds")
-print("\n=== Generator Demonstration ===")
-a = 0
-b = 1
-fi = []
-fi += [a]
-fi += [b]
-for i in range(2, 10):
-    c = a + b
-    a = b
-    b = c
-    fi += [c]
-    i += 1
-fi = iter(fi)
-print("Fibonacci sequence (first 10):", end=" ")
-for i in range(0, 9):
-    if i != 9:
-        print(next(fi), end=", ")
-print(next(fi))
-print("Prime numbers (first 5):", end="")
-for prime, index in prime_num():
-    if index != 4:
-        print(prime, end=", ")
-print(prime)
+if __name__ == "__main__":
+    main()
